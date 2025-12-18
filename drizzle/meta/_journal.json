@@ -15,6 +15,13 @@
       "when": 1764906037217,
       "tag": "0001_lonely_kree",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1766095837860,
+      "tag": "0002_fine_longshot",
+      "breakpoints": true
     }
   ]
 }

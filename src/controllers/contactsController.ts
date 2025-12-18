@@ -10,6 +10,7 @@ const createContactSchema = z.object({
     birthdayMonth: z.number().int().min(1, 'Month must be between 1 and 12').max(12, 'Month must be between 1 and 12'),
     birthdayDay: z.number().int().min(1, 'Day must be between 1 and 31').max(31, 'Day must be between 1 and 31'),
     birthdayYear: z.number().int().nullable().optional(),
+    notes: z.string().nullable().optional(),
 });
 
 const updateContactSchema = z.object({
@@ -17,6 +18,7 @@ const updateContactSchema = z.object({
     birthdayMonth: z.number().int().min(1, 'Month must be between 1 and 12').max(12, 'Month must be between 1 and 12').optional(),
     birthdayDay: z.number().int().min(1, 'Day must be between 1 and 31').max(31, 'Day must be between 1 and 31').optional(),
     birthdayYear: z.number().int().nullable().optional(),
+    notes: z.string().nullable().optional(),
 }).refine(
     data => Object.keys(data).length > 0,
     { message: 'At least one field must be provided for update' }
@@ -100,7 +102,7 @@ export const createContact = async (req: Request, res: Response) => {
         return;
     }
 
-    const { name, birthdayYear, birthdayMonth, birthdayDay } = validation.data;
+    const { name, birthdayYear, birthdayMonth, birthdayDay, notes } = validation.data;
 
     try {
         const userRecord = await getAuthenticatedUser(req, res);
@@ -112,6 +114,7 @@ export const createContact = async (req: Request, res: Response) => {
             birthdayYear: birthdayYear ?? null,
             birthdayMonth,
             birthdayDay,
+            notes: notes ?? null,
         }).returning();
 
         res.status(201).json(newContact[0]);
@@ -132,7 +135,7 @@ export const updateContact = async (req: Request, res: Response) => {
         return;
     }
 
-    const { name, birthdayYear, birthdayMonth, birthdayDay } = validation.data;
+    const { name, birthdayYear, birthdayMonth, birthdayDay, notes } = validation.data;
 
     try {
         const userRecord = await getAuthenticatedUser(req, res);
@@ -157,6 +160,7 @@ export const updateContact = async (req: Request, res: Response) => {
             birthdayYear: number | null;
             birthdayMonth: number;
             birthdayDay: number;
+            notes: string | null;
             updatedAt: Date;
         }> = {
             updatedAt: new Date(),
@@ -166,6 +170,7 @@ export const updateContact = async (req: Request, res: Response) => {
         if (birthdayYear !== undefined) updateData.birthdayYear = birthdayYear;
         if (birthdayMonth !== undefined) updateData.birthdayMonth = birthdayMonth;
         if (birthdayDay !== undefined) updateData.birthdayDay = birthdayDay;
+        if (notes !== undefined) updateData.notes = notes;
 
         const updatedContact = await db.update(contactsBirthdays)
             .set(updateData)

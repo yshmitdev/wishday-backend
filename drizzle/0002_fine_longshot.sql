@@ -1,0 +1,1 @@
+ALTER TABLE "contacts_birthdays" ADD COLUMN "notes" text;

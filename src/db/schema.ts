@@ -15,6 +15,7 @@ export const contactsBirthdays = pgTable('contacts_birthdays', {
     birthdayYear: integer('birthday_year'),
     birthdayMonth: integer('birthday_month').notNull(),
     birthdayDay: integer('birthday_day').notNull(),
+    notes: text('notes'), // Optional notes about tastes, preferences, hobbies, gift ideas
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 });

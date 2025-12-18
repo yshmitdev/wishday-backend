@@ -8,7 +8,7 @@
     "migrate": "drizzle-kit migrate",
     "push": "drizzle-kit push",
     "studio": "drizzle-kit studio",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx watch src/index.ts"
   },
   "keywords": [],
   "author": "",
