@@ -14,7 +14,8 @@ export const syncUser = async (req: Request, res: Response) => {
 
     try {
         const user = await clerkClient.users.getUser(authUserId);
-        const email = user.emailAddresses[0]?.emailAddress;
+        const primaryEmail = user.emailAddresses.find(e => e.id === user.primaryEmailAddressId);
+        const email = primaryEmail?.emailAddress;
 
         await db.insert(users)
             .values({
