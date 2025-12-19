@@ -4,6 +4,7 @@ import { db } from './db';
 import { users } from './db/schema';
 import userRoutes from './routes/users';
 import contactRoutes from './routes/contacts';
+import assistantRoutes from './routes/assistant';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/assistant', assistantRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
